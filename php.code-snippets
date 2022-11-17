@@ -1,0 +1,103 @@
+{
+  "Class CI4 Base": {
+    "prefix": "baseController",
+    "body": [
+      "namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+      "",
+      "use App\\Controllers\\Core\\BaseController;",
+      "",
+      "class ${TM_FILENAME_BASE} extends BaseController {",
+      "\t",
+      "\t$1",
+      "}"
+    ],
+    "scope": "php",
+    "description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
+  },
+  "Class CI4 Data": {
+    "prefix": "dataController",
+    "body": [
+      "namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+      "",
+      "use App\\Controllers\\Core\\DataController;",
+      "",
+      "class ${TM_FILENAME_BASE} extends DataController {",
+      "\t",
+      "\t$1",
+      "}"
+    ],
+    "scope": "php",
+    "description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
+  },
+  "Class CI4 Auth": {
+    "prefix": "authCont",
+    "body": [
+      "namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+      "",
+      "use App\\Controllers\\Core\\AuthController;",
+      "",
+      "class ${TM_FILENAME_BASE} extends AuthController {",
+      "\t",
+      "\t$1",
+      "}"
+    ],
+    "description": "Kelas codeigiter 4"
+  },
+  "Index Get Function": {
+    "prefix": "getList",
+    "body": [
+      "public function index_get() {",
+      "\t\\$query['data'] = \"data\";",
+      "\t\\$query['select'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['join'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['where'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['groupBy'] = \"\";",
+      "",
+      "",
+      "\t\\$query['pagination'] =[",
+      "\t'status' => true,",
+      "\t'page' => \"current\",",
+      "\t'limit' => 10,",
+      "\t];",
+      "\t\\$query['search'] = [];",
+      "",
+      "",
+      "\t\\$data = \\$this->generateListData(\\$this->get(), \\$query, \\$this->model);",
+      "",
+      "\t\\$this->responseMultiData(ResponseInterface::HTTP_OK, 'List Data', \\$data);",
+      "}"
+    ],
+    "description": "Index get list codeigiter 4"
+  },
+  "Detail Get Function": {
+    "prefix": "getDetail",
+    "body": [
+      "public function detail_get() {",
+      "\t\\$id = \\$this->get('id');",
+      "\t\\$query['data'] = \"data\";",
+      "\t\\$query['select'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['join'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['where'] = [",
+      "\t",
+      "\t];",
+      "\t\\$query['groupBy'] = \"\";",
+      "",
+      "",
+      "\t\\$data = \\$this->generateDetailData(\\$query, \\$this->model);",
+      "",
+      "\t\\echo view(\\$data);",
+      "}"
+    ],
+    "description": "Index get list codeigiter 4"
+  }
+}

@@ -1,0 +1,42 @@
+Main Feature
+------------ 
+1. Query Get Data
+    - Get List [
+        - Custom Query Get With : [
+            - Filter by Params, include range date ===> `DONE`
+            - FIlter by Params Filter Array ===> `DONE`
+            - Pagination ===> `DONE`
+            - Search Data ===> `DONE`
+            - Join Table ===> `DONE`
+            - OrderBy with Query/ with Params ===> `DONE`
+            - Select field as Params ===> `DONE`
+            - Where Condition ===> `DONE`
+            - Sanitization Data ===> `DONE`
+            - Debug (Print Raw Query) ===> `DONE`
+        ]
+    ] ===> `DONE`
+    - Get Data [
+        - Custom Query Builder With : [
+            - Join Table ===> `DONE`
+            - Select field as Params ===> `DONE`
+            - Where Condition ===> `DONE`
+            - Sanitization Data ===> `DONE`
+            - Debug (Print Raw Query) ===> `DONE`
+        ]
+    ] ===> `DONE`
+2. Validation Date
+3. Generate Slug ===> `DONE`
+4. Generate Code ===> `DONE`
+5. Sanitize Phone Number ===> `DONE`
+6. Sanitization Params on Method Get & Post ===> `DONE`
+7. Library Export Excel Using PHP SpreadSheet [
+    - Export Standart
+    - Export with Data Have Child
+] ===> `DONE`
+8. Generate Duration ===> `DONE`
+9. Generate Duration Label ===> `DONE`
+10. Format Number with Prefix ===> `DONE`
+
+Yang Dibawah ini Baru OTW Buat
+11. Login & Register with Session
+    
