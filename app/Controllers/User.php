@@ -27,17 +27,22 @@ class User extends DataController
     }
 
     public function index_post() {
-        $this->db->transBegin();
+        $this->userModel->transBegin();
+        $this->userDetailModel->transBegin();
         $is_error = false;
         $error_code = '';
+        $data = [];
         try{
-            $insert_data = [];
-            $insert_data['user_name'] = $this->post('name');
-            $insert_data['user_email'] = $this->post('email');
-            $insert_data['user_password'] = $this->post('password');
-            $insert_data['user_active_bool'] = $this->post('active_bool');
+            $user = [];
+            $user['user_username'] = $this->post('username');
+            $user['user_name'] = $this->post('name');
+            $slug = $this->generateSlug($user['user_name']);
+            $user['user_slug'] = $slug;
+            $user['user_email'] = $this->post('email');
+            $user['user_password'] = $this->post('password');
+            $user['user_active_bool'] = $this->post('active_bool');
             
-            if (!$this->userModel->save($insert_data)) {
+            if (!$this->userModel->save($user)) {
                 throw new \Exception('Error Validation', 1);
                 return redirect()->back()->withInput()->with('validation', $this->userModel->errors());
             }
@@ -45,20 +50,41 @@ class User extends DataController
             if ($this->userModel->affectedRows() < 0) {
                 throw new \Exception('Error Insert Database', 1);
             }
-            $insert_data['id'] = (string) $this->userModel->insertID();
+            $user['id'] = (string) $this->userModel->insertID();
+
+            $mobilephone = $this->sanitizePhoneNumber($this->post('mobilephone'));
+            $code = $this->generateCode($this->userDetailModel, 'user_detail_user_code', true, 'U');
+            $userDetail = [];
+            $userDetail['user_detail_user_detail_id'] = $user['id'];
+            $userDetail['user_detail_user_address'] = $this->post('address');
+            $userDetail['user_detail_user_mobilephone'] = $mobilephone;
+            $userDetail['user_detail_user_code'] = $code;
+            
+            if (!$this->userDetailModel->save($userDetail)) {
+                throw new \Exception('Error Validation', 1);
+                return redirect()->back()->withInput()->with('validation', $this->userDetailModel->errors());
+            }
+            
+            if ($this->userDetailModel->affectedRows() < 0) {
+                throw new \Exception('Error Insert Database', 1);
+            }
+            $userDetail['id'] = (string) $this->userDetailModel->insertID();
         } catch (\Throwable $error) {
             $is_error = true;
             $error_code = $error->getMessage();
         }
         if ($is_error) {
-            $this->db->transRollback();
+            $this->userModel->transRollback();
+            $this->userDetailModel->transRollback();
             session()->setFlashdata('failed', 'Gagal tambah data');
         } else {
-            if ($this->db->transStatus() === false) {
-                $this->db->transRollback();
+            if ($this->userModel->transStatus() === false || $this->userDetailModel->transStatus() === false) {
+                $this->userModel->transRollback();
+                $this->userDetailModel->transRollback();
                 session()->setFlashdata('failed', 'Gagal tambah data');
             }else {
-                $this->db->transCommit();
+                $this->userModel->transCommit();
+                $this->userDetailModel->transCommit();
                 session()->setFlashdata('success', 'Berhasil tambah data');
             }
         }

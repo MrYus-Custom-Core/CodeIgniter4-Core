@@ -7,6 +7,7 @@ use App\Controllers\Core\BaseController;
 
 // Load Models
 use App\Models\UserModel;
+use App\Models\UserDetailModel;
 
 // Load Library
 use App\Libraries\ExportExcel;
@@ -21,6 +22,7 @@ class DataController extends BaseController {
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->userDetailModel = new UserDetailModel();
     }
 
     // QUERY BUILDER GET METHOD FEATURE :
@@ -614,7 +616,7 @@ class DataController extends BaseController {
 
     // ---------------
     // Generating Code
-    protected function generateCode($model, $field, $where = [], $prefix = '', $digit = 5) {
+    protected function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5, $where = []) {
         $year = date('y');
         $month = date('m');
         $day = date('d');
@@ -627,29 +629,48 @@ class DataController extends BaseController {
         if (!empty($whereQuery)) {
             $this->whereDetail($where, $builder);
         }
+        if ($useDate === true) {
+            $builder->like($field, $date);
+        }
         $builder->select($field);
         $builder->limit(1);
         $builder->orderBy($field, 'DESC');
-        $builder->get();
-        $code = $builder->getResultArray();
+        $code = $builder->first();
     
         // -----------
         // Create Code
         if (count($code) > 0) {
-            foreach ($code as $key => $value) {
-                $lastCode = $value;
-                $start = strlen($lastCode) - $digit;
-                $oldCode = '';
-                  
-                for ($x = $start; $x < strlen($lastCode); $x++) {
-                    $oldCode .= $lastCode[$x];
-                }
-                $new_code = sprintf("%0{$digit}}d", (int)$oldCode + 1);
-                $code = $prefix."-".$date."-".$new_code;
+            $lastCode = $code[$field];
+            $start = strlen($lastCode) - $digit;
+            $oldCode = '';
+                
+            for ($x = $start; $x < strlen($lastCode); $x++) {
+                $oldCode .= $lastCode[$x];
+            }
+            $newCode = sprintf("%0{$digit}d", (int)$oldCode + 1);
+            if (!empty($prefix) && $useDate === true) {
+                $code = $prefix."-".$date." -".$newCode;
+            } elseif (empty($prefix) && $useDate  === true) {
+                $code = $date."-".$newCode;
+            } elseif (!empty($prefix) && $useDate === false) {
+                $code = $prefix."-".$newCode;
+            } else {
+                $code = $newCode;
             }
         } else {
+            $newCode = sprintf("%0{$digit}d", 1);
             $code = $prefix."-".$date."-000001";
+            if (!empty($prefix) && $useDate  === true) {
+                $code = $prefix."-".$date." -".$newCode;
+            } elseif (!empty($prefix) && !$useDate) {
+                $code = $date."-".$newCode;
+            } elseif (!empty($prefix) && $useDate === false) {
+                $code = $prefix."-".$newCode;
+            } else {
+                $code = $newCode;
+            }
         }
+        return $code;
     } // -------------
 
     // ----------------------

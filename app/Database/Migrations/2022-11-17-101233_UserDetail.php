@@ -20,7 +20,7 @@ class UserDetail extends Migration
             ],
             'user_detail_user_code' => [
                 'type' => 'VARCHAR',
-                'constraint'     => 10,
+                'constraint'     => 20,
             ],
             'user_detail_user_address' => [
                 'type' => 'VARCHAR',

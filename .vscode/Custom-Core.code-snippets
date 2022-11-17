@@ -99,5 +99,10 @@
 		"}"
 	  ],
 	  "description": "Index get list custom core"
+	},
+	"print_r and die": {
+		"prefix": "printDie",
+		"body": ["print_r($1); die;"],
+		"description": "Single Delete post codeigiter 4"
 	}
   }
