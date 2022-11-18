@@ -44,13 +44,4 @@ class AuthController extends DataController {
         }
         return true;
     }
-    
-    protected function getUserSession() {
-        $session = session()->get('user');
-        if (empty($session)) {
-            return "";
-        }
-        $session = decryptFromHex($session);
-        return $session;
-    }
 }

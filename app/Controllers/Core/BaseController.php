@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 
@@ -46,9 +47,16 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-		// print_r($request); die;
 
-		$this->session = \Config\Services::session();
+		$throttler = Services::throttler();
+
+        // Restrict an IP address to no more than 1 request per seconds
+        // per second across the entire site.
+        if ($throttler->check(md5($request->getIPAddress()), 60, MINUTE) === false) {
+            return Services::response()->setStatusCode(429);
+        }
+
+		$this->account = $this->getUserSession();
 
 		$this->db = \Config\Database::connect();
 		if($this->request->getMethod() === 'post') {
@@ -246,4 +254,13 @@ abstract class BaseController extends Controller
 		));
 		exit;
 	}
+
+	private function getUserSession() {
+        $session = session()->get('user');
+        if (empty($session)) {
+            return "";
+        }
+        $session = decryptFromHex($session);
+        return $session;
+    }
 }

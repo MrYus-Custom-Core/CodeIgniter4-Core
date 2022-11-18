@@ -234,18 +234,9 @@ function sayHello() {
 
 // * ----------------------------
 // ? Format Date to Readable Date
-function dateFormatter($datetime, $lang = 'id_ID', $type = 'FULL', $hour = null, $region = null, $format = 'dd MMM yyy HH:mm') {
-    if ($type == 'FULL') {
-        $IntlDateFormatter = IntlDateFormatter::FULL;
-    } elseif ($type == 'SHORT') {
-        $IntlDateFormatter = IntlDateFormatter::SHORT;
-    } elseif ($type == 'MEDIUM') {
-        $IntlDateFormatter = IntlDateFormatter::MEDIUM;
-    } elseif ($type == 'LONG') {
-        $IntlDateFormatter = IntlDateFormatter::MEDIUM;
-    }
-    $formater = new IntlDateFormatter($lang, $IntlDateFormatter, $IntlDateFormatter, $hour, $region, $format);
-    $formatedDate = $formater->format(strtotime($datetime));
+function dateFormatter($datetime, $lang = 'id_ID', $type = IntlDateFormatter::FULL, $type2 = IntlDateFormatter::FULL, $timezone = null, $calendar = null, $format = 'yyyy MMM dd HH:mm') {
+    $formater = datefmt_create($lang, $type, $type2, $timezone, $calendar, $format);
+    $formatedDate = datefmt_format($formater, strtotime($datetime));
     return $formatedDate;
 } // * --------------------------
 
