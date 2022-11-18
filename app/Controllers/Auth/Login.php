@@ -52,7 +52,7 @@ class Login extends AuthController {
         // session data config
         unset($user_arr['password']);
         $dataSession = [
-            'user' => $this->encryptData->encrypt(json_encode($user_arr))
+            'user' => encryptToHex($user_arr)
         ];
         // set session
         session()->set($dataSession);

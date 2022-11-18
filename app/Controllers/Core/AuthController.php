@@ -50,7 +50,7 @@ class AuthController extends DataController {
         if (empty($session)) {
             return "";
         }
-        $session = json_decode($this->encryptData->decrypt($session));
+        $session = decryptFromHex($session);
         return $session;
     }
 }
