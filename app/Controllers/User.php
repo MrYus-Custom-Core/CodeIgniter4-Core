@@ -7,7 +7,8 @@ use App\Controllers\Core\AuthController;
 class User extends AuthController
 {
     public function session_get() {
-        $session = $this->getUserSession();
+        $session = $this->account;
+        
         print_r($session); die;
     }
     public function index_get()
