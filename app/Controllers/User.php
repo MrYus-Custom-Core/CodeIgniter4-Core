@@ -13,13 +13,13 @@ class User extends AuthController
             'user_detail' => 'user_detail_user_id = user_id'
         ];
         $query['select'] = [
-            'user_name' => 'name',
-            'user_email' => 'email',
-            'user_created_datetime' => 'created_datetime',
-            'user_active_bool' => 'active_bool',
+            'user_name'                => 'name',
+            'user_email'               => 'email',
+            'user_created_datetime'    => 'created_datetime',
+            'user_active_bool'         => 'active_bool',
             'user_detail_user_address' => 'address'
         ];
-        $query['order'] = array('-user_name');
+        $query['order']  = array('-user_name');
         $query['search'] = [
             'user_name',
             'user_email'

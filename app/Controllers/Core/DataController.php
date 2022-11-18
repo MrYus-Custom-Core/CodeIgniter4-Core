@@ -15,8 +15,8 @@ class DataController extends BaseController {
     protected $userDetailModel;
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->userModel       = new UserModel();
         $this->userDetailModel = new UserDetailModel();
-        $this->encryptData = \Config\Services::encrypter();
+        $this->encryptData     = \Config\Services::encrypter();
     }
 }

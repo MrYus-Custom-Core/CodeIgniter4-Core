@@ -1,77 +1,77 @@
 <?php 
 
-// QUERY BUILDER GET METHOD FEATURE :
-// 1. Get Detail Data =
-//      - Define Variable Result 
-//        example = $query['data'] = 'data'
-// 
-//      - Select Field as with Array
-//        example = $query['select'] = ['field' => 'as_name', ...]
-// 
-//      - Join Table with Array
-//        example = $query['join'] = ['tablename' => 'field_1 = field_2']
-// 
-//      - Group By Query
-//        example = $query['groupBy'] = 'field, field_2, ...'
-// 
-//      - Get softDeteled Data 
-//        example = $query['withDeleted'] = true | false
-// 
-//      - Sanitize Result
-//        json decoded of object or array, formated date
-// 
-//        Call This Function with generateDetailData
-// 
-// 2. Get List Data = 
-//      - Define Variable Result
-//        example = $query['data'] = 'data'
-// 
-//      - Select Field as with Array
-//        example = $query['select'] = ['field' => 'as_name', ...]
-// 
-//      - Join Table with Array
-//        example = $query['join'] = ['tablename' => 'field_1 = field_2']
-// 
-//      - Group By Query
-//        example = $query['groupBy'] = 'field, field_2, ...'
-// 
-//      - Search With 'search' Params & Search Query
-//        example = $query['search'] = ['field_1', 'field_2', ...] || parmas = base_url?search=value
-// 
-//      - Filter With Params
-//        example = base_url?as_name=value
-// 
-//      - Filter Range Date with startDate and enDate Params
-//        example = base_url?startDate=data&&endDate=date
-// 
-//      - Filter with Filter array Params
-//        example = base_url?filter[]['type']=string|date&&filter[]['field']=as_name&&filter[]['value']=value&&filter[]['comparison']='='|'<'|'<='|'>='|'<>'|'bet'
-// 
-//      - Order Data by Default
-//        example = $query['order'] = '-field', start with - for descending
-// 
-//      - Order Data by Params & Replace Default Order
-//        example = base_url?sort=-as_name , start with - for descending
-// 
-//      - Pagination with Custom Page Name and Limit
-//        example = $query['pagination'] = ['status' => true|false, 'page' => 'pageName', 'limit' => 10]
-// 
-//      - Get softDeteled Data
-//        example = $query['onlyDeleted'] = true, to get only softDeleted data || $query['withDeleted'] = true to get with softDeleted data 
-// 
-//      - rowCount 
-//        Total Data Count
-// 
-//      - Sanitize Result
-//        json decoded of object or array, formated date
-// 
-//        Call This Function with generateListData
+// ! QUERY BUILDER GET METHOD FEATURE :
+// ? 1. Get Detail Data =
+// *      - Define Variable Result 
+// *        example = $query['data'] = 'data'
+//
+// *      - Select Field as with Array
+// *        example = $query['select'] = ['field' => 'as_name', ...]
+//
+// *      - Join Table with Array
+// *        example = $query['join'] = ['tablename' => 'field_1 = field_2']
+//
+// *      - Group By Query
+// *        example = $query['groupBy'] = 'field, field_2, ...'
+//
+// *      - Get softDeteled Data 
+// *        example = $query['withDeleted'] = true | false
+//
+// *      - Sanitize Result
+// *        json decoded of object or array, formated date
+//
+// *        Call This Function with generateDetailData
+//
+// ? 2. Get List Data = 
+// *      - Define Variable Result
+// *        example = $query['data'] = 'data'
+//
+// *      - Select Field as with Array
+// *        example = $query['select'] = ['field' => 'as_name', ...]
+//
+// *      - Join Table with Array
+// *        example = $query['join'] = ['tablename' => 'field_1 = field_2']
+//
+// *      - Group By Query
+// *        example = $query['groupBy'] = 'field, field_2, ...'
+//
+// *      - Search With 'search' Params & Search Query
+// *        example = $query['search'] = ['field_1', 'field_2', ...] || parmas = base_url?search=value
+//
+// *      - Filter With Params
+// *        example = base_url?as_name=value
+//
+// *      - Filter Range Date with startDate and enDate Params
+// *        example = base_url?startDate=data&&endDate=date
+//
+// *      - Filter with Filter array Params
+// *        example = base_url?filter[]['type']=string|date&&filter[]['field']=as_name&&filter[]['value']=value&&filter[]['comparison']='='|'<'|'<='|'>='|'<>'|'bet'
+//
+// *      - Order Data by Default
+// *        example = $query['order'] = '-field', start with - for descending
+//
+// *      - Order Data by Params & Replace Default Order
+// *        example = base_url?sort=-as_name , start with - for descending
+//
+// *      - Pagination with Custom Page Name and Limit
+// *        example = $query['pagination'] = ['status' => true|false, 'page' => 'pageName', 'limit' => 10]
+//
+// *      - Get softDeteled Data
+// *        example = $query['onlyDeleted'] = true, to get only softDeleted data || $query['withDeleted'] = true to get with softDeleted data 
+//
+// *      - rowCount 
+// *        Total Data Count
+//
+// *      - Sanitize Result
+// *        json decoded of object or array, formated date
+//
+// *        Call This Function with generateListData
 
 
-// ---- QUERY BUILDER GET METHOD START ----
+// ! ---- QUERY BUILDER GET METHOD START ----
 
-// ===========================================
-// Function to generate one data from database
+// * ===========================================
+// ? Function to generate one data from database
 function generateDetailData($query, $model, $debug = false) {
     $builder = $model;
 
@@ -86,54 +86,54 @@ function generateDetailData($query, $model, $debug = false) {
 
     $data = [];
 
-    // --------------
-    // Building Query
+    // * --------------
+    // ? Building Query
 
-    // Set Select
+    // ? Set Select
     if (!empty($selectQuery)) {
         selectField($selectQuery, $builder);
     }
-    // Set Join
+    // ? Set Join
     if (!empty($joinQuery)) {
         joinTable($joinQuery, $builder);
     }
-    // set where
+    // ? set where
     if (!empty($whereQuery)) {
         whereDetail($whereQuery, $builder);
     }
-    // Set Group By
+    // ? Set Group By
     if (!empty($groupByQuery)) {
         groupByQuery($groupByQuery, $builder);
     }
-    // Set With Deleted
+    // ? Set With Deleted
     if ($withDeleted) {
         $builder->getWithDeleted();
     }
     $builder->limit(1);
-    // End QUery Builder
-    // -----------------
+    // ? End QUery Builder
+    // * -----------------
 
     // Get Result QUery
     $result = $builder->get();
     $result = $result->getResultArray(false);
     $data[$dataQuery] = sanitizeQueryResult($result);
 
-    // ----------------------------
-    // Get Last Query if Debug true
+    // * ----------------------------
+    // ? Get Last Query if Debug true
     if ($debug) {
         print_r('<pre>');
-        print_r($builder->getCompiledSelect());
+        print_r($builder->getLastQuery());
     }
 
-    // Return Result
+    // ? Return Result
     return $data;
-} // =========================================
+} // * =========================================
 
-// =============================================
-// Function to generate data list from data base
+// * =============================================
+// ? Function to generate data list from data base
 function generateListData($params, $query, $model, $debug = false) {
     $builder = $model;
-    // Setup Params Data
+    // ? Setup Params Data
     $startDate = isset($params['startDate']) ? $params['startDate'] : '';
     unset($params['startDate']);
     $endDate = isset($params['endDate']) ? $params['endDate'] : '';
@@ -145,17 +145,17 @@ function generateListData($params, $query, $model, $debug = false) {
     $sort = isset($params['sort']) ? $params['sort'] : '';
     unset($params['sort']);
 
-    // Set Pagination
+    // ? Set Pagination
     $pagination = true;
     $pageName = 'current';
     $currentPage = 1;
     $pageLimit = 10;
-    // Pagination from params
+    // ? Pagination from params
     if (isset($params['pagination_bool'])) {
         $pagination = $params['pagination_bool'] == '1' ? true : false;
         unset($params['pagination_bool']);
     }
-    // Pagination With Query
+    // ? Pagination With Query
     unset($params['pagination_bool']);
     if (isset($query['pagination'])) {
         $paginate = $query['pagination'];
@@ -185,77 +185,77 @@ function generateListData($params, $query, $model, $debug = false) {
 
     $data = [];
 
-    // --------------
-    // Building Query
-    // Set Select
+    // * --------------
+    // ? Building Query
+    // ? Set Select
     if (!empty($selectQuery)) {
         selectField($selectQuery, $builder);
     }
-    // Set Join
+    // ? Set Join
     if (!empty($joinQuery)) {
         joinTable($joinQuery, $builder);
     }
-    // Set Where
+    // ? Set Where
     if (!empty($whereQuery)) {
         whereDetail($whereQuery, $builder);
     }
-    // Set Group By
+    // ? Set Group By
     if (!empty($groupByQuery)) {
         groupByQuery($groupByQuery, $builder);
     }
-    // Set Search
+    // ? Set Search
     if (!empty($searchQuery) && !empty($search)) {
         searchField($search, $searchQuery, $builder);
     }
-    // Set Filter Date
+    // ? Set Filter Date
     if (!empty($startDate) && !empty($endDate)) {
         filterDate($startDate, $endDate, $selectQuery, $builder);
     }
-    // Set Filter Array
+    // ? Set Filter Array
     if (!empty($filter)) {
         filterArray($filter, $selectQuery, $builder);
     }
-    // Set Order Query
+    // ? Set Order Query
     if (!empty($orderQuery) & empty($sort)) {
         orderField($orderQuery, $builder);
     }
-    // Set Sort Data with Params
+    // ? Set Sort Data with Params
     if (!empty($sort)) {
         sortField($sort, $selectQuery, $builder);
     }
-    // Set Filter Params
+    // ? Set Filter Params
     if (!empty($params)) {
         filterParams($params, $selectQuery, $builder);
     }
 
-    // Set Only Deleted
+    // ? Set Only Deleted
     if ($onlyDeleted) {
         $builder->getOnlyDeleted();
     }
-    // Set With Deleted
+    // ? Set With Deleted
     if ($withDeleted) {
         $builder->getWithDeleted();
     }
     
-    // Set Pagination if true
+    // ? Set Pagination if true
     if ($pagination) {
         $result = $builder->paginate($pageLimit, $pageName);
     } else {
         $result = $builder->get();
         $result = $result->getResultArray();
     }
-    // End Query Builder
-    // -----------------
+    // ? End Query Builder
+    // * -----------------
 
-    // ----------------------------
-    // Get Last Query if debug true
+    // * ----------------------------
+    // ? Get Last Query if debug true
     if ($debug) {
         print_r('<pre>');
         print_r($builder->getLastQuery());
     }
 
-    // -------------
-    // Building Data
+    // * -------------
+    // ? Building Data
     $data[$dataQuery] = sanitizeQueryResult($result);
 
     if ($pagination) {
@@ -264,23 +264,23 @@ function generateListData($params, $query, $model, $debug = false) {
         $data['page'] = $pageName;
         $data['limit'] = $pageLimit;
     }
-    // -------------
+    // * -------------
 
-    // return data
+    // ? return data
     return  $data;
-} // ===========================================
+} // * ===========================================
 
-// -----------------------------
-// Generate Select Query Builder
+// * -----------------------------
+// ? Generate Select Query Builder
 function selectField($selectQuery = [], $builder) {
     foreach ($selectQuery as $key => $value) {
         $builder->select("{$key} AS {$value}");
     }
     return $builder;
-} // ---------------------------
+} // * ---------------------------
 
-// ---------------------------
-// Generate Join Query Builder
+// * ---------------------------
+// ? Generate Join Query Builder
 function joinTable($joinQUery = [], $builder) {
     if (!empty($joinQUery)) {
         foreach($joinQUery as $key => $value) {
@@ -288,35 +288,35 @@ function joinTable($joinQUery = [], $builder) {
         }
         return $builder;
     }
-} // -------------------------
+} // * -------------------------
 
-// -------------------------------
-// Generate Group By Query Builder
+// * -------------------------------
+// ? Generate Group By Query Builder
 function groupByQuery($groupByQuery, $builder) {
     $builder->groupBy($groupByQuery);
     return $builder;
-} // -----------------------------
+} // * -----------------------------
 
-// -----------------------------
-// Generate Search Query Builder
+// * -----------------------------
+// ? Generate Search Query Builder
 function searchField($search, $searchQuery, $builder) {
     foreach($searchQuery as $key => $value) {
         $builder->orLike($value, $search);
     }
     return $builder;
-} // ---------------------------
+} // * ---------------------------
 
-//----------------------------- 
-// Generate Where Query Builder
+// * ---------------------------- 
+// ? Generate Where Query Builder
 function whereDetail($whereQuery, $builder) {
     foreach ($whereQuery as $key => $value) {
         $builder->where($key, $value);
     }
     return $builder;
-} //---------------------------
+} // * --------------------------
 
-// --------------------------------------
-// Generate Query Builder Filter By Array
+// * --------------------------------------
+// ? Generate Query Builder Filter By Array
 function filterArray($filter = [], $selectQuery ,$builder) {
     if (!empty($filter)) {
         foreach ($selectQuery as $keyQuery => $valueQuery) {
@@ -421,10 +421,10 @@ function filterArray($filter = [], $selectQuery ,$builder) {
         }
         return $builder;
     }
-} // ------------------------------------
+} // * ------------------------------------
 
-// ---------------------------------------
-// Generate Query Builder Filter By Params
+// * ---------------------------------------
+// ? Generate Query Builder Filter By Params
 function filterParams($params, $selectQuery, $builder) {
     foreach ($selectQuery as $keyQuery => $valueQuery) {
         foreach ($params as $key => $value) {
@@ -448,10 +448,10 @@ function filterParams($params, $selectQuery, $builder) {
         }
     }
     return $builder;
-} // -------------------------------------
+} // * -------------------------------------
 
-// --------------------------------------------------------
-// Generate Query Filter Date By startDate & endDate Params
+// * --------------------------------------------------------
+// ? Generate Query Filter Date By startDate & endDate Params
 function filterDate($startDate, $endDate, $selectQuery, $builder) {
     foreach ($selectQuery as $key => $value) {
         if (endsWith($key, 'date')) {
@@ -469,10 +469,10 @@ function filterDate($startDate, $endDate, $selectQuery, $builder) {
         }
     }
     return $builder;
-} // ------------------------------------------------------
+} // * ------------------------------------------------------
 
-// ------------------------------------
-// Generate Query Builder OrderBy Field
+// * ------------------------------------
+// ? Generate Query Builder OrderBy Field
 function orderField($orderQuery, $builder) {
     foreach ($orderQuery as $key => $value) {
         if (startsWith($value, '-')) {
@@ -483,10 +483,10 @@ function orderField($orderQuery, $builder) {
         }
     }
     return $builder;
-} // ----------------------------------
+} // * ----------------------------------
 
-// -------------------------------------------
-// Generate Query Builder OrderBy using Params
+// * -------------------------------------------
+// ? Generate Query Builder OrderBy using Params
 function sortField($sort, $selectQuery, $builder) {
     if (startsWith($sort, '-')) {
         $field = str_replace('-', '', $sort);
@@ -501,10 +501,10 @@ function sortField($sort, $selectQuery, $builder) {
         }
     }
     return $builder;
-} // -----------------------------------------
+} // * -----------------------------------------
 
-// ------------------------------------
-// Sanitazion Data Result Query Builder
+// * ------------------------------------
+// ? Sanitazion Data Result Query Builder
 function sanitizeQueryResult($data) {
     foreach ($data as $keyData => $valData) {
         foreach ($valData as $key => $value) {
@@ -532,6 +532,6 @@ function sanitizeQueryResult($data) {
         }
     }
     return $data;
-} // ----------------------------------
+} // * ----------------------------------
 
-// ---- END QUERY BUILDER GET METHOD ----
+// ! ---- END QUERY BUILDER GET METHOD ----
