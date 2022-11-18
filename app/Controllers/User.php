@@ -25,7 +25,7 @@ class User extends AuthController
             'user_email'
         ];
 
-        $data = $this->generateListData($this->get(), $query, $this->userModel);
+        $data = generateListData($this->get(), $query, $this->userModel);
         echo view('/User/user', $data);
     }
 
@@ -39,7 +39,7 @@ class User extends AuthController
             $user = [];
             $user['user_username'] = $this->post('username');
             $user['user_name'] = $this->post('name');
-            $slug = $this->generateSlug($user['user_name']);
+            $slug = generateSlug($user['user_name']);
             $user['user_slug'] = $slug;
             $user['user_email'] = $this->post('email');
             $user['user_password'] = $this->post('password');
@@ -55,8 +55,8 @@ class User extends AuthController
             }
             $user['id'] = (string) $this->userModel->insertID();
 
-            $mobilephone = $this->sanitizePhoneNumber($this->post('mobilephone'));
-            $code = $this->generateCode($this->userDetailModel, 'user_detail_user_code', true, 'U');
+            $mobilephone = sanitizePhoneNumber($this->post('mobilephone'));
+            $code = generateCode($this->userDetailModel, 'user_detail_user_code', true, 'U');
             $userDetail = [];
             $userDetail['user_detail_user_detail_id'] = $user['id'];
             $userDetail['user_detail_user_address'] = $this->post('address');
