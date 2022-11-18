@@ -39,6 +39,7 @@ $routes->get('/', 'Home::index');
 $routes->post('/auth/login', 'Auth\Login::login');
 $routes->post('/auth/logout', 'Auth\Login::logout');
 $routes->get('/user', 'User::index_get');
+$routes->get('/user/session', 'User::session_get');
 $routes->post('/user', 'User::index_post');
 
 /*

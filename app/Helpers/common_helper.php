@@ -257,3 +257,51 @@ function currentFullUrl() {
     $fullURL = $currentURL . '?' . $params;
     return $fullURL;
 } // * ----------------------
+
+// * -------------------------------------
+// ? Encrypt Data To Hex with CI Encrypter
+function encryptToHex($data) {
+    if (!empty($data)) {
+        $data = encrypterCI(json_encode($data));
+        $data = bin2hex($data);
+        return $data;
+    } else {
+        return '';
+    }
+} // * -----------------------------------
+
+// * ---------------------------------------
+// ? Decrypt Data From Hex with CI Encrypter
+function decryptFromHex($data) {
+    if (!empty($data)) {
+        $data = hex2bin($data);
+        $data = json_decode(decrypterCI($data));
+        return $data;
+    } else {
+        return '';
+    }
+} // * ------------------------------------
+
+// * ------------------------------
+// ? Encrypt Data with CI Encrypter
+function encrypterCI($data) {
+    if (!empty($data)) {
+        $encrypt = \Config\Services::encrypter();
+        $data = $encrypt->encrypt($data);
+        return $data;
+    } else {
+        return '';
+    }
+} // * ----------------------------
+
+// * ------------------------------
+// ? Decrypt Data with CI Encrypter
+function decrypterCI($data) {
+    if (!empty($data)) {
+        $encrypt = \Config\Services::encrypter();
+        $data = $encrypt->decrypt($data);
+        return $data;
+    } else {
+        return '';
+    }
+} // * ----------------------------
