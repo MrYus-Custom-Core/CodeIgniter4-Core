@@ -15,7 +15,7 @@ class AuthController extends DataController {
         $builder->orWhere('user_email', $userData);
         $builder->limit(1);
         $builder = $builder->get();
-        $user = $builder->getResultArray();
+        $user    = $builder->getResultArray();
 
         if (count($user) < 0) {
             return false;

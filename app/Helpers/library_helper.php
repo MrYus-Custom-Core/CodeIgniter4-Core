@@ -1,10 +1,10 @@
 <?php
 
-// load library first
+// ? load library first
 use App\Libraries\ExportExcel;
 
-// ---------------------------------
-// Export Excel With PHP SpreadSheet
+// * ---------------------------------
+// ? Export Excel With PHP SpreadSheet
 function exportExcel($data, $option = [], $type = 'Standard') {
     $exportExcel = new ExportExcel($data, $option);
 
@@ -16,4 +16,4 @@ function exportExcel($data, $option = [], $type = 'Standard') {
     }
 
     return $export;
-} // -------------------------------
+} // * -------------------------------

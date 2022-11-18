@@ -1,20 +1,20 @@
 <?php
 
-// HELPER FUNCTION CONTAINS : 
-// - Date validation === $this->validateDate
-// - Generate slug ==== $this->generateSlug 
-// - Generate Code From DB === $this->generateCode
-// - Generate Unique Code with AlphaNum === $this->generateUniqueCode
-// - Sanitize Phone Number === $this->sanitizePhoneNumber
-// - Generate Duration Label === $this->generateDurationLabel
-// - Generate Duration form 2 date === $this->generateDuration
-// - Number formater with Prefix === $this->numberId
-// - Export Excel with PHP SpreadSheet Library === $this->exportExcel
-// - Format Date from 2022-01-01 to 01 January 2022 === $this->dateFormatter
+// ? HELPER FUNCTION CONTAINS : 
+// * - Date validation === $this->validateDate
+// * - Generate slug ==== $this->generateSlug 
+// * - Generate Code From DB === $this->generateCode
+// * - Generate Unique Code with AlphaNum === $this->generateUniqueCode
+// * - Sanitize Phone Number === $this->sanitizePhoneNumber
+// * - Generate Duration Label === $this->generateDurationLabel
+// * - Generate Duration form 2 date === $this->generateDuration
+// * - Number formater with Prefix === $this->numberId
+// * - Export Excel with PHP SpreadSheet Library === $this->exportExcel
+// * - Format Date from 2022-01-01 to 01 January 2022 === $this->dateFormatter
 
-// ----- START HELPER FUNCTION -----
+// * ----- START HELPER FUNCTION -----
 
-// ---------------
+// * ---------------
 // Date Validation
 function validateDate($date, $format = 'Y-m-d') {
     if($format == 'Y-m'){
@@ -23,10 +23,10 @@ function validateDate($date, $format = 'Y-m-d') {
     }
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
-} // -------------
+} // * -------------
 
-// ----------------------------------
-// Generating Slug form Name or Title
+// * ----------------------------------
+// ? Generating Slug form Name or Title
 function generateSlug($text) {
     // replace non letter or digits by -
     $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
@@ -48,9 +48,9 @@ function generateSlug($text) {
     }
 
     return $text;
-} // --------------------------------
+} // * --------------------------------
 
-// ---------------
+// * ---------------
 // Generating Code
 function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5, $where = []) {
     $year = date('y');
@@ -58,10 +58,10 @@ function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5
     $day = date('d');
     $date = $year.$month.$day;
 
-    // -------------------
-    // Query Get Last Code
+    // * -------------------
+    // ? Query Get Last Code
     $builder = $model;
-    // set where
+    // ? set where
     if (!empty($whereQuery)) {
         whereDetail($where, $builder);
     }
@@ -73,8 +73,8 @@ function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5
     $builder->orderBy($field, 'DESC');
     $code = $builder->first();
 
-    // -----------
-    // Create Code
+    // * -----------
+    // ?Create Code
     if (count($code) > 0) {
         $lastCode = $code[$field];
         $start = strlen($lastCode) - $digit;
@@ -107,10 +107,10 @@ function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5
         }
     }
     return $code;
-} // -------------
+} // * -------------
 
-// ----------------------
-// Generating Unique Code
+// * ----------------------
+// ? Generating Unique Code
 function generateUniqueCode($lenght = 6, $option = 'full') {
     if ($option == 'full') {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -135,10 +135,10 @@ function generateUniqueCode($lenght = 6, $option = 'full') {
         $code .= $characters[rand(0, $charactersLength - 1)];
     }
     return $code;
-} // --------------------
+} // * --------------------
 
-// ---------------------
-// Sanitize Phone Number
+// * ---------------------
+// ? Sanitize Phone Number
 function sanitizePhoneNumber($no, $code = '62') {
     $no = str_replace(' ', '', $no);
     $no = str_replace('-', '', $no);
@@ -156,10 +156,10 @@ function sanitizePhoneNumber($no, $code = '62') {
         }
     }
     return $tempNo != '' ? $tempNo : $no;
-} // -------------------
+} // * -------------------
 
-// -----------------------
-// Generate Duration Label
+// * -----------------------
+// ? Generate Duration Label
 function generateDurationLabel($duration, $type = 'seconds') {
     if ($type == 'hours') {
         $days = floor($duration/24);
@@ -178,10 +178,10 @@ function generateDurationLabel($duration, $type = 'seconds') {
         return "$days hari $hours jam $minutes menit $seconds detik";
     }
     return false;
-} // ---------------------
+} // * ---------------------
 
-// -----------------
-// Generate Duration
+// * -----------------
+// ? Generate Duration
 function generateDuration($dateOne, $dateTwo, $type = 'seconds') {
     $endTime = strtotime($dateOne);
     $startTime = strtotime($dateTwo);
@@ -208,16 +208,16 @@ function generateDuration($dateOne, $dateTwo, $type = 'seconds') {
         return $duration;
     }
     return false;
-} // ---------------
+} // * ---------------
 
-// ----------------------------------
-// Generate Format Number From String
+// * ----------------------------------
+// ? Generate Format Number From String
 function numberId($str, $prefix = '', $decimal = 0) {
     return $prefix . number_format($str, $decimal, ',', '.');
-} // --------------------------------
+} // * --------------------------------
 
-// ---------------------
-// Generate Welcome Word
+// * ---------------------
+// ? Generate Welcome Word
 function sayHello() {
     $time = date('H:i');
     if ($time >= '00:00' && $time <= '02:59') {
@@ -235,10 +235,10 @@ function sayHello() {
     if ($time >= '19:00' && $time <= '23:59') {
         return 'malam';
     }
-} // -------------------
+} // * -------------------
 
-// ----------------------------
-// Format Date to Readable Date
+// * ----------------------------
+// ? Format Date to Readable Date
 function dateFormatter($datetime, $lang = 'id_ID', $type = 'FULL', $hour = null, $region = null, $format = 'dd MMM yyy HH:mm') {
     if ($type == 'FULL') {
         $IntlDateFormatter = IntlDateFormatter::FULL;
@@ -252,13 +252,13 @@ function dateFormatter($datetime, $lang = 'id_ID', $type = 'FULL', $hour = null,
     $formater = new IntlDateFormatter($lang, $IntlDateFormatter, $IntlDateFormatter, $hour, $region, $format);
     $formatedDate = $formater->format(strtotime($datetime));
     return $formatedDate;
-} // --------------------------
+} // * --------------------------
 
-// ------------------------
-// Get Full URL with Params
+// * ------------------------
+// ? Get Full URL with Params
 function currentFullUrl() {
     $currentURL = current_url();
     $params   = $_SERVER['QUERY_STRING'];
     $fullURL = $currentURL . '?' . $params;
     return $fullURL;
-}
+} // * ----------------------
