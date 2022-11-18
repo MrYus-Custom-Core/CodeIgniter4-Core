@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\Core\DataController;
+use App\Controllers\Core\AuthController;
 
-class User extends DataController
+class User extends AuthController
 {
     public function index_get()
     {
@@ -20,9 +20,12 @@ class User extends DataController
             'user_detail_user_address' => 'address'
         ];
         $query['order'] = array('-user_name');
+        $query['search'] = [
+            'user_name',
+            'user_email'
+        ];
 
         $data = $this->generateListData($this->get(), $query, $this->userModel);
-
         echo view('/User/user', $data);
     }
 
