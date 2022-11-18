@@ -50,14 +50,10 @@ class Login extends AuthController {
         }
 
         // session data config
-        $dataSession = [];
-        foreach($user_arr as $admin) {
-            $dataSession = [
-                'name' => $admin['name'],
-                'username' => $admin['username'],
-                'email' => $admin['email'],
-            ];
-        }
+        unset($user_arr['password']);
+        $dataSession = [
+            'user' => $this->encryptData->encrypt(json_encode($user_arr))
+        ];
         // set session
         session()->set($dataSession);
     }

@@ -23,6 +23,7 @@ class DataController extends BaseController {
     {
         $this->userModel = new UserModel();
         $this->userDetailModel = new UserDetailModel();
+        $this->encryptData = \Config\Services::encrypter();
     }
 
     // QUERY BUILDER GET METHOD FEATURE :
