@@ -29,6 +29,7 @@
                 <?php } else { ?>
                     <?php $i = 1; ?>
                 <?php } ?>
+                <?php if(!empty($user)) { ?>
                 <?php foreach($user as $key => $value) : ?>
                     <tr>
                         <td><?php echo $i++; ?></td>
@@ -39,6 +40,7 @@
                         <td><?php echo ($value['active_bool']) ? 'Aktif' : 'Tidak Aktif'; ?></td>
                     </tr>
                 <?php endforeach; ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>

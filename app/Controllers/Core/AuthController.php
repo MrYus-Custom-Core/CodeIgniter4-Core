@@ -16,7 +16,6 @@ class AuthController extends DataController {
         $builder->limit(1);
         $builder = $builder->get();
         $user = $builder->getResultArray();
-        $count = count($user);
 
         if (count($user) < 0) {
             return false;

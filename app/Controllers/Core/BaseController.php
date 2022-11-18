@@ -36,7 +36,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['url', 'query', 'common', 'library'];
 
 
     /**
@@ -46,6 +46,7 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
+		// print_r($request); die;
 
 		$this->session = \Config\Services::session();
 

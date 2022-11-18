@@ -68,7 +68,7 @@
 		"\t\\$query['search'] = [];",
 		"",
 		"",
-		"\t\\$data = \\$this->generateListData(\\$this->get(), \\$query, \\$this->model);",
+		"\t\\$data = generateListData(\\$this->get(), \\$query, \\$this->model);",
 		"",
 		"\techo view(\"\", \\$data);",
 		"}"
@@ -93,9 +93,9 @@
 		"\t\\$query['groupBy'] = \"\";",
 		"",
 		"",
-		"\t\\$data = \\$this->generateDetailData(\\$query, \\$this->model);",
+		"\t\\$data = generateDetailData(\\$query, \\$this->model);",
 		"",
-		"\t\\echo view(\"\", $data);",
+		"\techo view(\"\", \\$data);",
 		"}"
 	  ],
 	  "description": "Index get list custom core"
