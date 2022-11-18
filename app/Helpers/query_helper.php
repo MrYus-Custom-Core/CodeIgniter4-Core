@@ -133,6 +133,7 @@ function generateDetailData($query, $model, $debug = false) {
 // ? Function to generate data list from data base
 function generateListData($params, $query, $model, $debug = false) {
     $builder = $model;
+    $rowCount = generateCountListData($params, $query, $builder);
     // ? Setup Params Data
     $startDate = isset($params['startDate']) ? $params['startDate'] : '';
     unset($params['startDate']);
@@ -256,6 +257,7 @@ function generateListData($params, $query, $model, $debug = false) {
 
     // * -------------
     // ? Building Data
+    $data['rowCount'] = $rowCount;
     $data[$dataQuery] = sanitizeQueryResult($result);
 
     if ($pagination) {
@@ -269,6 +271,118 @@ function generateListData($params, $query, $model, $debug = false) {
     // ? return data
     return  $data;
 } // * ===========================================
+
+// * =============================================
+// ? Function to generate data list from data base
+function generateCountListData($params, $query, $model, $debug = false) {
+    $builder = $model;
+    // ? Setup Params Data
+    $startDate = isset($params['startDate']) ? $params['startDate'] : '';
+    unset($params['startDate']);
+    $endDate = isset($params['endDate']) ? $params['endDate'] : '';
+    unset($params['endDate']);
+    $search = isset($params['search']) ? $params['search'] : '';
+    unset($params['search']);
+    $filter = isset($params['filter']) ? $params['filter'] : '';
+    unset($params['filter']);
+    $sort = isset($params['sort']) ? $params['sort'] : '';
+    unset($params['sort']);
+
+    // ? Set Pagination
+    $pagination = true;
+    $pageName = 'current';
+    $currentPage = 1;
+    $pageLimit = 10;
+    // ? Pagination from params
+    if (isset($params['pagination_bool'])) {
+        $pagination = $params['pagination_bool'] == '1' ? true : false;
+        unset($params['pagination_bool']);
+    }
+    // ? Pagination With Query
+    unset($params['pagination_bool']);
+    if (isset($query['pagination'])) {
+        $paginate = $query['pagination'];
+        if (isset($paginate['status']) && !empty($paginate['status'])) {
+            $pagination = $paginate['status'] == '1' ? true : false;
+        }
+        if (isset($paginate['page'])) {
+            $pageName = !empty($paginate['page']) ? $paginate['page'] : 'current';
+        }
+        if (isset($paginate['limit'])) {
+            $pageLimit = !empty($paginate['limit']) ? $paginate['limit'] : 10;
+        }
+    }
+    $currentPage = isset($params["page_'{$pageName}'"]) ? $params["page_'{$pageName}'"] : 1;
+
+    // Setup Query Data
+    $dataQuery = isset($query['data']) ? $query['data'] : 'data';
+    $selectQuery = isset($query['select']) ? $query['select'] : '';
+    $joinQuery = isset($query['join']) ? $query['join'] : [];
+    $whereQuery = isset($query['where']) ? $query['where'] : '';
+    $groupByQuery = isset($query['groupBy']) ? $query['groupBy'] : '';
+    $searchQuery = isset($query['search']) ? $query['search'] : '';
+    $orderQuery = isset($query['order']) ? $query['order'] : [];
+    // filter deleted
+    $onlyDeleted = isset($query['onlyDeleted']) ? $query['onlyDeleted'] : false;
+    $withDeleted = isset($query['withDeleted']) ? $query['withDeleted'] : false;
+
+    $data = [];
+
+    // * --------------
+    // ? Building Query
+    // ? Set Select
+    if (!empty($selectQuery)) {
+        selectField($selectQuery, $builder);
+    }
+    // ? Set Join
+    if (!empty($joinQuery)) {
+        joinTable($joinQuery, $builder);
+    }
+    // ? Set Where
+    if (!empty($whereQuery)) {
+        whereDetail($whereQuery, $builder);
+    }
+    // ? Set Group By
+    if (!empty($groupByQuery)) {
+        groupByQuery($groupByQuery, $builder);
+    }
+    // ? Set Search
+    if (!empty($searchQuery) && !empty($search)) {
+        searchField($search, $searchQuery, $builder);
+    }
+    // ? Set Filter Date
+    if (!empty($startDate) && !empty($endDate)) {
+        filterDate($startDate, $endDate, $selectQuery, $builder);
+    }
+    // ? Set Filter Array
+    if (!empty($filter)) {
+        filterArray($filter, $selectQuery, $builder);
+    }
+    // ? Set Order Query
+    if (!empty($orderQuery) & empty($sort)) {
+        orderField($orderQuery, $builder);
+    }
+    // ? Set Sort Data with Params
+    if (!empty($sort)) {
+        sortField($sort, $selectQuery, $builder);
+    }
+    // ? Set Filter Params
+    if (!empty($params)) {
+        filterParams($params, $selectQuery, $builder);
+    }
+
+    // ? Set Only Deleted
+    if ($onlyDeleted) {
+        $builder->getOnlyDeleted();
+    }
+    // ? Set With Deleted
+    if ($withDeleted) {
+        $builder->getWithDeleted();
+    }
+    $rowCount = $builder->countAllResults();
+    return $rowCount;
+} // * ===========================================
+
 
 // * -----------------------------
 // ? Generate Select Query Builder
