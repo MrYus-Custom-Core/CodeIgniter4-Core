@@ -15,7 +15,7 @@
 // * ----- START HELPER FUNCTION -----
 
 // * ---------------
-// Date Validation
+// ? Date Validation
 function validateDate($date, $format = 'Y-m-d') {
     if($format == 'Y-m'){
         $date = $date . '-01';
@@ -28,19 +28,14 @@ function validateDate($date, $format = 'Y-m-d') {
 // * ----------------------------------
 // ? Generating Slug form Name or Title
 function generateSlug($text) {
-    // replace non letter or digits by -
     $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
-    // trim
     $text = trim($text, '-');
 
-    // transliterate
     $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 
-    // lowercase
     $text = strtolower($text);
 
-    // remove unwanted characters
     $text = preg_replace('~[^-\w]+~', '', $text);
 
     if (empty($text)) {
@@ -51,7 +46,7 @@ function generateSlug($text) {
 } // * --------------------------------
 
 // * ---------------
-// Generating Code
+// ? Generating Code
 function generateCode($model, $field, $useDate = false, $prefix = '', $digit = 5, $where = []) {
     $year = date('y');
     $month = date('m');
