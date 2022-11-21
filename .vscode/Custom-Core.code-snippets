@@ -1,108 +1,123 @@
 {
 	"Class CI4 Base": {
-	  "prefix": "baseController",
-	  "body": [
-		"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
-		"",
-		"use App\\Controllers\\Core\\BaseController;",
-		"",
-		"class ${TM_FILENAME_BASE} extends BaseController {",
-		"\t",
-		"\t$1",
-		"}"
-	  ],
-	  "scope": "php",
-	  "description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
+		"prefix": "baseController",
+		"body": [
+			"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+			"",
+			"use App\\Controllers\\Core\\BaseController;",
+			"",
+			"class ${TM_FILENAME_BASE} extends BaseController {",
+			"\t",
+			"\t$1",
+			"}"
+		],
+		"scope": "php",
+		"description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
 	},
 	"Class CI4 Data": {
-	  "prefix": "dataController",
-	  "body": [
-		"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
-		"",
-		"use App\\Controllers\\Core\\DataController;",
-		"",
-		"class ${TM_FILENAME_BASE} extends DataController {",
-		"\t",
-		"\t$1",
-		"}"
-	  ],
-	  "scope": "php",
-	  "description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
+		"prefix": "dataController",
+		"body": [
+			"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+			"",
+			"use App\\Controllers\\Core\\DataController;",
+			"",
+			"class ${TM_FILENAME_BASE} extends DataController {",
+			"\t",
+			"\t$1",
+			"}"
+		],
+		"scope": "php",
+		"description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
 	},
 	"Class CI4 Auth": {
-	  "prefix": "authCont",
-	  "body": [
-		"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
-		"",
-		"use App\\Controllers\\Core\\AuthController;",
-		"",
-		"class ${TM_FILENAME_BASE} extends AuthController {",
-		"\t",
-		"\t$1",
-		"}"
-	  ],
-	  "description": "Kelas codeigiter 4"
+		"prefix": "authController",
+		"body": [
+			"namespace App\\\\${TM_DIRECTORY/(?:.*[\\/\\\\])?app[\\/\\\\]([^\\/\\\\]*)[\\/\\\\]?|[\\/\\\\]([^\\/\\\\]*)/$1\\$2/g};",
+			"",
+			"use App\\Controllers\\Core\\AuthController;",
+			"",
+			"class ${TM_FILENAME_BASE} extends AuthController {",
+			"\t",
+			"\t$1",
+			"}"
+		],
+		"description": "Kelas codeigiter 4 \n// get list gunakan snippet 'getList'"
 	},
 	"Index Get Function": {
-	  "prefix": "getList",
-	  "body": [
-		"public function index_get() {",
-		"\t\\$query['data'] = \"data\";",
-		"\t\\$query['select'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['join'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['where'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['groupBy'] = \"\";",
-		"",
-		"",
-		"\t\\$query['pagination'] =[",
-		"\t    'status' => true,",
-		"\t    'page' => \"current\",",
-		"\t    'limit' => 10,",
-		"\t];",
-		"\t\\$query['search'] = [];",
-		"",
-		"",
-		"\t\\$data = generateListData(\\$this->get(), \\$query, \\$this->model);",
-		"",
-		"\techo view(\"\", \\$data);",
-		"}"
-	  ],
-	  "description": "Index get list csutom core"
+		"prefix": "getList",
+		"body": [
+			"public function index_get() {",
+			"\t\\$query['data'] = \"data\";",
+			"\t\\$query['select'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['join'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['where'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['groupBy'] = \"\";",
+			"",
+			"",
+			"\t\\$query['pagination'] =[",
+			"\t    'status' => true,",
+			"\t    'page' => \"current\",",
+			"\t    'limit' => 10,",
+			"\t];",
+			"\t\\$query['search'] = [];",
+			"",
+			"",
+			"\t\\$data = generateListData(\\$this->get(), \\$query, \\$this->model);",
+			"",
+			"\techo view(\"\", \\$data);",
+			"}"
+		],
+		"description": "Index get list csutom core"
 	},
 	"Detail Get Function": {
-	  "prefix": "getDetail",
-	  "body": [
-		"public function detail_get() {",
-		"\t\\$id = \\$this->get('id');",
-		"\t\\$query['data'] = \"data\";",
-		"\t\\$query['select'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['join'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['where'] = [",
-		"\t",
-		"\t];",
-		"\t\\$query['groupBy'] = \"\";",
-		"",
-		"",
-		"\t\\$data = generateDetailData(\\$query, \\$this->model);",
-		"",
-		"\techo view(\"\", \\$data);",
-		"}"
-	  ],
-	  "description": "Index get list custom core"
+		"prefix": "getDetail",
+		"body": [
+			"public function detail_get() {",
+			"\t\\$id = \\$this->get('id');",
+			"\t\\$query['data'] = \"data\";",
+			"\t\\$query['select'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['join'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['where'] = [",
+			"\t",
+			"\t];",
+			"\t\\$query['groupBy'] = \"\";",
+			"",
+			"",
+			"\t\\$data = generateDetailData(\\$query, \\$this->model);",
+			"",
+			"\techo view(\"\", \\$data);",
+			"}"
+		],
+		"description": "Index get detail custom core"
 	},
 	"print_r and die": {
 		"prefix": "printDie",
 		"body": ["print_r($1); die;"],
 		"description": "Single Delete post codeigiter 4"
+	},
+	"print_r and die inLine": {
+		"prefix": "printDieView",
+		"body": ["<?php print_r($1); die; ?>"],
+		"description": "print_r data then die inside view"
+	},
+	"echo pre and die": {
+		"prefix": "echoDie",
+		"body": ["echo <pre>; echo $1; die;"],
+		"description": "echo pre data then die"
+	},
+	"echo pre and die inLine": {
+		"prefix": "echoDie",
+		"body": ["<?php echo <pre>; echo $1; die; ?>"],
+		"description": "echo pre data then die inside view"
 	}
-  }
+}

@@ -133,12 +133,13 @@ function generateDetailData($query, $model, $debug = false) {
 // ? Function to generate data list from data base
 function generateListData($params, $query, $model, $debug = false) {
     $builder = $model;
-    $rowCount = generateCountListData($params, $query, $builder);
     // ? Setup Params Data
     $startDate = isset($params['startDate']) ? $params['startDate'] : '';
     unset($params['startDate']);
     $endDate = isset($params['endDate']) ? $params['endDate'] : '';
     unset($params['endDate']);
+    $dateFilter = isset($params['dateFilter']) ? $params['dateFilter'] : '';
+    unset($params['dateFilter']);
     $search = isset($params['search']) ? $params['search'] : '';
     unset($params['search']);
     $filter = isset($params['filter']) ? $params['filter'] : '';
@@ -178,13 +179,20 @@ function generateListData($params, $query, $model, $debug = false) {
     $joinQuery = isset($query['join']) ? $query['join'] : [];
     $whereQuery = isset($query['where']) ? $query['where'] : '';
     $groupByQuery = isset($query['groupBy']) ? $query['groupBy'] : '';
+    $dateFilterQuery = isset($query['dateFilter']) ? $query['dateFilter'] : '';
     $searchQuery = isset($query['search']) ? $query['search'] : '';
     $orderQuery = isset($query['order']) ? $query['order'] : [];
+    $rowCountQuery = isset($query['showRowCount']) ? $query['showRowCount'] : true;
     // filter deleted
     $onlyDeleted = isset($query['onlyDeleted']) ? $query['onlyDeleted'] : false;
     $withDeleted = isset($query['withDeleted']) ? $query['withDeleted'] : false;
-
+    
     $data = [];
+
+    if ($rowCountQuery) {
+        $rowCount = generateCountListData($params, $query, $builder);
+        $data['rowCount'] = $rowCount;
+    }
 
     // * --------------
     // ? Building Query
@@ -210,7 +218,7 @@ function generateListData($params, $query, $model, $debug = false) {
     }
     // ? Set Filter Date
     if (!empty($startDate) && !empty($endDate)) {
-        filterDate($startDate, $endDate, $selectQuery, $builder);
+        filterDate($startDate, $endDate, $dateFilter, $dateFilterQuery, $selectQuery, $builder);
     }
     // ? Set Filter Array
     if (!empty($filter)) {
@@ -257,7 +265,6 @@ function generateListData($params, $query, $model, $debug = false) {
 
     // * -------------
     // ? Building Data
-    $data['rowCount'] = $rowCount;
     $data[$dataQuery] = sanitizeQueryResult($result);
 
     if ($pagination) {
@@ -272,8 +279,10 @@ function generateListData($params, $query, $model, $debug = false) {
     return  $data;
 } // * ===========================================
 
-// * =============================================
-// ? Function to generate data list from data base
+// ! ---- END QUERY BUILDER GET METHOD ----
+
+// * ============================
+// ? Function to count data query
 function generateCountListData($params, $query, $model, $debug = false) {
     $builder = $model;
     // ? Setup Params Data
@@ -281,6 +290,8 @@ function generateCountListData($params, $query, $model, $debug = false) {
     unset($params['startDate']);
     $endDate = isset($params['endDate']) ? $params['endDate'] : '';
     unset($params['endDate']);
+    $dateFilter = isset($params['dateFilter']) ? $params['dateFilter'] : '';
+    unset($params['dateFilter']);
     $search = isset($params['search']) ? $params['search'] : '';
     unset($params['search']);
     $filter = isset($params['filter']) ? $params['filter'] : '';
@@ -320,6 +331,7 @@ function generateCountListData($params, $query, $model, $debug = false) {
     $joinQuery = isset($query['join']) ? $query['join'] : [];
     $whereQuery = isset($query['where']) ? $query['where'] : '';
     $groupByQuery = isset($query['groupBy']) ? $query['groupBy'] : '';
+    $dateFilterQuery = isset($query['dateFilter']) ? $query['dateFilter'] : '';
     $searchQuery = isset($query['search']) ? $query['search'] : '';
     $orderQuery = isset($query['order']) ? $query['order'] : [];
     // filter deleted
@@ -352,7 +364,7 @@ function generateCountListData($params, $query, $model, $debug = false) {
     }
     // ? Set Filter Date
     if (!empty($startDate) && !empty($endDate)) {
-        filterDate($startDate, $endDate, $selectQuery, $builder);
+        filterDate($startDate, $endDate, $dateFilter, $dateFilterQuery, $selectQuery, $builder);
     }
     // ? Set Filter Array
     if (!empty($filter)) {
@@ -381,7 +393,7 @@ function generateCountListData($params, $query, $model, $debug = false) {
     }
     $rowCount = $builder->countAllResults();
     return $rowCount;
-} // * ===========================================
+} // * ==========================
 
 
 // * -----------------------------
@@ -566,19 +578,25 @@ function filterParams($params, $selectQuery, $builder) {
 
 // * --------------------------------------------------------
 // ? Generate Query Filter Date By startDate & endDate Params
-function filterDate($startDate, $endDate, $selectQuery, $builder) {
-    foreach ($selectQuery as $key => $value) {
-        if (endsWith($key, 'date')) {
-            if($startDate != $endDate) {
-                $builder->where("{$key} BETWEEN '{$startDate}' AND '{$endDate}'");
-            } else {
-                $builder->where($key, $startDate);
-            }
-        } elseif(endsWith($key, 'datetime')) {
-            if($startDate != $endDate) {
-                $builder->where("DATE({$key}) BETWEEN '{$startDate}' AND '{$endDate}'");
-            } else {
-                $builder->where($key, $startDate);
+function filterDate($startDate, $endDate, $dateFilter = '', $dateFilterQuery = '', $selectQuery, $builder) {
+    if (!empty($dateFilter)) {
+        $builder->where("{$dateFilter} BETWEEN '{$startDate}' AND '{$endDate}'");
+    } elseif(!empty($dateFilterQuery)) {
+        $builder->where("{$dateFilterQuery} BETWEEN '{$startDate}' AND '{$endDate}'");
+    } else {
+        foreach ($selectQuery as $key => $value) {
+            if (endsWith($key, 'date')) {
+                if($startDate != $endDate) {
+                    $builder->where("{$key} BETWEEN '{$startDate}' AND '{$endDate}'");
+                } else {
+                    $builder->where($key, $startDate);
+                }
+            } elseif(endsWith($key, 'datetime')) {
+                if($startDate != $endDate) {
+                    $builder->where("DATE({$key}) BETWEEN '{$startDate}' AND '{$endDate}'");
+                } else {
+                    $builder->where($key, $startDate);
+                }
             }
         }
     }
@@ -647,5 +665,3 @@ function sanitizeQueryResult($data) {
     }
     return $data;
 } // * ----------------------------------
-
-// ! ---- END QUERY BUILDER GET METHOD ----
