@@ -29,6 +29,9 @@ class User extends AuthController
             'user_name',
             'user_email'
         ];
+        $query['showRowCount'] = true;
+
+        $query['dateFilter'] = "user_created_datetime";
 
         $data = generateListData($this->get(), $query, $this->userModel);
         echo view('/User/user', $data);

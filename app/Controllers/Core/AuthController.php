@@ -2,11 +2,21 @@
 
 // Namespace
 namespace App\Controllers\Core;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 // Load BaseController
 use App\Controllers\Core\DataController;
 
 class AuthController extends DataController {
+
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
+        $this->checkSessionExist();
+    }
 
     protected function checkUserExist($userData) {
         $builder = $this->userModel;

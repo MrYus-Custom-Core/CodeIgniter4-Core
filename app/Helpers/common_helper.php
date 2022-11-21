@@ -1,16 +1,20 @@
 <?php
 
-// ? HELPER FUNCTION CONTAINS : 
-// * - Date validation === $this->validateDate
-// * - Generate slug ==== $this->generateSlug 
-// * - Generate Code From DB === $this->generateCode
-// * - Generate Unique Code with AlphaNum === $this->generateUniqueCode
-// * - Sanitize Phone Number === $this->sanitizePhoneNumber
-// * - Generate Duration Label === $this->generateDurationLabel
-// * - Generate Duration form 2 date === $this->generateDuration
-// * - Number formater with Prefix === $this->numberId
-// * - Export Excel with PHP SpreadSheet Library === $this->exportExcel
-// * - Format Date from 2022-01-01 to 01 January 2022 === $this->dateFormatter
+// ? HELPER Contains Functions : 
+// * - Date validation === validateDate
+// * - Generate slug ==== generateSlug 
+// * - Generate Code From DB === generateCode
+// * - Generate Unique Code with AlphaNum === generateUniqueCode
+// * - Sanitize Phone Number === sanitizePhoneNumber
+// * - Generate Duration Label === generateDurationLabel
+// * - Generate Duration form 2 date === generateDuration
+// * - Number formater with Prefix === numberId
+// * - Export Excel with PHP SpreadSheet Library === exportExcel
+// * - Format Date from 2022-01-01 to 01 January 2022 === dateFormatter
+// * - Encrypt Data To Hex using CI4 Encrypter === encryptToHex
+// * - Decrypt Data From Hex using CI4 Encrypter === decryptFromHex
+// * - Encrypt Data using CI4 Encrypter === encrypterCI
+// * - Decrypt Data using CI4 Encrypter === decrypterCI
 
 // * ----- START HELPER FUNCTION -----
 
