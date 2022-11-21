@@ -33,7 +33,7 @@ class User extends AuthController
 
         $query['dateFilter'] = "user_created_datetime";
 
-        $data = generateListData($this->get(), $query, $this->userModel);
+        $data = generateListData($this->get(), $query, $this->userModel, true);
         echo view('/User/user', $data);
     }
 

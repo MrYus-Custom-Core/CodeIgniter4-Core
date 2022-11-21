@@ -261,6 +261,7 @@ function generateListData($params, $query, $model, $debug = false) {
     if ($debug) {
         print_r('<pre>');
         print_r($builder->getLastQuery());
+        die;
     }
 
     // * -------------
@@ -426,9 +427,11 @@ function groupByQuery($groupByQuery, $builder) {
 // * -----------------------------
 // ? Generate Search Query Builder
 function searchField($search, $searchQuery, $builder) {
+    $builder->groupStart();
     foreach($searchQuery as $key => $value) {
         $builder->orLike($value, $search);
     }
+    $builder->groupEnd();
     return $builder;
 } // * ---------------------------
 

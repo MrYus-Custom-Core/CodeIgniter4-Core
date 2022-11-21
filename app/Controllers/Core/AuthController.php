@@ -47,8 +47,8 @@ class AuthController extends DataController {
         return $user;
     }
 
-    protected function checkSessionExist() {
-        $session = session()->get();
+    protected function checkSessionExist($sessionName = 'user') {
+        $session = session()->get($sessionName);
         if (empty($session)) {
             return false;
         }
