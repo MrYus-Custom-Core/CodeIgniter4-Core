@@ -15,7 +15,7 @@ class User extends Seeder
                 'user_username' => 'romihaidar',
                 'user_slug' => 'romi-haidar',
                 'user_name' => 'Romi Haidar',
-                'user_email' => 'romihaidar2@gmail.com',
+                'user_email' => 'romihaidar@gmail.com',
                 'user_password' => password_hash('123456', PASSWORD_BCRYPT),
                 'user_created_datetime' => '2022-11-17 17:49:00'
             ],

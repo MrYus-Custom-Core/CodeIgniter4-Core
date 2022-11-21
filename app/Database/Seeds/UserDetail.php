@@ -12,7 +12,7 @@ class UserDetail extends Seeder
             [
                 'user_detail_id' => 1,
                 'user_detail_user_id' => 1,
-                'user_detail_user_address' => 'Jl. Sitimulyo No 55, Somokaton, Piyungan, Bantul, Yogyakarta',
+                'user_detail_user_address' => 'Jl. Raya Ya nda tau kog tanya saya',
                 'user_detail_user_mobilephone' => '085729929508',
                 'user_detail_user_code' => 'U-221117-00001',
             ],
