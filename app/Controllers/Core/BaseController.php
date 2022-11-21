@@ -56,7 +56,7 @@ abstract class BaseController extends Controller
             return Services::response()->setStatusCode(429);
         }
 
-		$this->account = $this->getUserSession();
+		$this->account = $this->getUserSession('user');
 
 		$this->db = \Config\Database::connect();
 		if($this->request->getMethod() === 'post') {
@@ -255,8 +255,8 @@ abstract class BaseController extends Controller
 		exit;
 	}
 
-	private function getUserSession() {
-        $session = session()->get('user');
+	private function getUserSession($sessionName = 'user') {
+        $session = session()->get($sessionName);
         if (empty($session)) {
             return "";
         }
