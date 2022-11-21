@@ -1,42 +1,62 @@
-Main Feature
------------- 
-1. Query Get Data
-    - Get List [
-        - Custom Query Get With : [
-            - Filter by Params, include range date ===> `DONE`
-            - FIlter by Params Filter Array ===> `DONE`
-            - Pagination ===> `DONE`
-            - Search Data ===> `DONE`
-            - Join Table ===> `DONE`
-            - OrderBy with Query/ with Params ===> `DONE`
-            - Select field as Params ===> `DONE`
-            - Where Condition ===> `DONE`
-            - Sanitization Data ===> `DONE`
-            - Debug (Print Raw Query) ===> `DONE`
-        ]
-    ] ===> `DONE`
-    - Get Data [
-        - Custom Query Builder With : [
-            - Join Table ===> `DONE`
-            - Select field as Params ===> `DONE`
-            - Where Condition ===> `DONE`
-            - Sanitization Data ===> `DONE`
-            - Debug (Print Raw Query) ===> `DONE`
-        ]
-    ] ===> `DONE`
-2. Validation Date
-3. Generate Slug ===> `DONE`
-4. Generate Code ===> `DONE`
-5. Sanitize Phone Number ===> `DONE`
-6. Sanitization Params on Method Get & Post ===> `DONE`
-7. Library Export Excel Using PHP SpreadSheet [
-    - Export Standart
-    - Export with Data Have Child
-] ===> `DONE`
-8. Generate Duration ===> `DONE`
-9. Generate Duration Label ===> `DONE`
-10. Format Number with Prefix ===> `DONE`
+** QUERY BUILDER GET METHOD FEATURE :**
+ 1. Get Detail Data =
+      - Define Variable Result 
+        example = $query['data'] = 'data'
+      - Select Field as with Array
+        example = $query['select'] = ['field' => 'as_name', ...]
+      - Join Table with Array
+        example = $query['join'] = ['tablename' => 'field_1 = field_2']
+      - Group By Query
+        example = $query['groupBy'] = 'field, field_2, ...'
+      - Get softDeteled Data 
+        example = $query['withDeleted'] = true | false
+      - Sanitize Result
+        json decoded of object or array, formated date
+        Call This Function with generateDetailData
 
-Yang Dibawah ini Baru OTW Buat
-11. Login & Register with Session
-    
+ 2. Get List Data = 
+      - Define Variable Result
+        example = $query['data'] = 'data'
+      - Select Field as with Array
+        example = $query['select'] = ['field' => 'as_name', ...]
+      - Join Table with Array
+        example = $query['join'] = ['tablename' => 'field_1 = field_2']
+      - Group By Query
+        example = $query['groupBy'] = 'field, field_2, ...'
+      - Search With 'search' Params & Search Query
+        example = $query['search'] = ['field_1', 'field_2', ...] || parmas = base_url?search=value
+      - Filter With Params
+        example = base_url?as_name=value
+      - Filter Range Date with startDate and enDate Params
+        example = base_url?startDate=data&&endDate=date
+      - Filter with Filter array Params
+        example = base_url?filter[]['type']=string|date&&filter[]['field']=as_name&&filter[]['value']=value&&filter[]['comparison']='='|'<'|'<='|'>='|'<>'|'bet'
+      - Order Data by Default
+        example = $query['order'] = '-field', start with - for descending
+      - Order Data by Params & Replace Default Order
+        example = base_url?sort=-as_name , start with - for descending
+      - Pagination with Custom Page Name and Limit
+        example = $query['pagination'] = ['status' => true|false, 'page' => 'pageName', 'limit' => 10]
+      - Get softDeteled Data
+        example = $query['onlyDeleted'] = true, to get only softDeleted data || $query['withDeleted'] = true to get with softDeleted data 
+      - rowCount 
+        Total Data Count
+      - Sanitize Result
+        json decoded of object or array, formated date
+        Call This Function with generateListData
+
+** HELPER Contains Functions : ** 
+ - Date validation === validateDate
+ - Generate slug ==== generateSlug 
+ - Generate Code From DB === generateCode
+ - Generate Unique Code with AlphaNum === generateUniqueCode
+ - Sanitize Phone Number === sanitizePhoneNumber
+ - Generate Duration Label === generateDurationLabel
+ - Generate Duration form 2 date === generateDuration
+ - Number formater with Prefix === numberId
+ - Export Excel with PHP SpreadSheet Library === exportExcel
+ - Format Date from 2022-01-01 to 01 January 2022 === dateFormatter
+ - Encrypt Data To Hex using CI4 Encrypter === encryptToHex
+ - Decrypt Data From Hex using CI4 Encrypter === decryptFromHex
+ - Encrypt Data using CI4 Encrypter === encrypterCI
+ - Decrypt Data using CI4 Encrypter === decrypterCI
